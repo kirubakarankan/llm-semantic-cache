@@ -1,0 +1,60 @@
+{"truth": "same", "kind": "reworded, name kept", "saved": "what does the etcdNoLeader alert mean?", "asked": "explain the etcdNoLeader alert"}
+{"truth": "same", "kind": "reworded, no name", "saved": "what does the etcdNoLeader alert mean?", "asked": "etcd has no leader, what is that?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "what does the etcdNoLeader alert mean?", "asked": "What does the etcdNoLeader alert mean?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "what does the etcdNoLeader alert mean?", "asked": "what is etcdNoLeader?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "how do I fix KubePodCrashLooping?", "asked": "how to resolve KubePodCrashLooping"}
+{"truth": "same", "kind": "reworded, no name", "saved": "how do I fix KubePodCrashLooping?", "asked": "how do I fix a pod that keeps crash looping?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "how do I fix KubePodCrashLooping?", "asked": "KubePodCrashLooping fix"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "what is the impact of KubeHpaMaxedOut?", "asked": "what happens when KubeHpaMaxedOut fires?"}
+{"truth": "same", "kind": "reworded, no name", "saved": "what is the impact of KubeHpaMaxedOut?", "asked": "impact of the autoscaler being at max replicas"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "how do I diagnose NodeFilesystemAlmostOutOfSpace?", "asked": "how to diagnose NodeFilesystemAlmostOutOfSpace"}
+{"truth": "same", "kind": "reworded, no name", "saved": "how do I diagnose NodeFilesystemAlmostOutOfSpace?", "asked": "how do I investigate a node disk that is almost full?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "what does the Watchdog alert do?", "asked": "what is the Watchdog alert for?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "what does the Watchdog alert do?", "asked": "purpose of the Watchdog alert"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "how do I fix PrometheusBadConfig?", "asked": "how can I fix PrometheusBadConfig?"}
+{"truth": "same", "kind": "reworded, no name", "saved": "how do I fix PrometheusBadConfig?", "asked": "prometheus config reload is failing, how do I fix it?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "what does CPUThrottlingHigh mean?", "asked": "meaning of CPUThrottlingHigh"}
+{"truth": "same", "kind": "reworded, no name", "saved": "what does CPUThrottlingHigh mean?", "asked": "what does it mean when containers are CPU throttled a lot?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "how do I fix KubeNodeNotReady?", "asked": "steps to fix KubeNodeNotReady"}
+{"truth": "same", "kind": "reworded, no name", "saved": "how do I fix KubeNodeNotReady?", "asked": "a node is not ready, how do I fix it?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "what does KubeJobFailed mean?", "asked": "what is the KubeJobFailed alert?"}
+{"truth": "same", "kind": "reworded, no name", "saved": "what does KubeJobFailed mean?", "asked": "what does it mean when a kubernetes job has failed?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "how do I fix etcdHighFsyncDurations?", "asked": "how to fix etcdHighFsyncDurations?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "what is the impact of KubeAPIDown?", "asked": "what breaks when KubeAPIDown fires?"}
+{"truth": "same", "kind": "reworded, no name", "saved": "what is the impact of KubeAPIDown?", "asked": "impact of the kubernetes API being down"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "how do I diagnose TargetDown?", "asked": "how do I troubleshoot TargetDown?"}
+{"truth": "same", "kind": "reworded, no name", "saved": "how do I diagnose TargetDown?", "asked": "how do I find out why a scrape target is down?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "what does NodeClockSkewDetected mean?", "asked": "explain NodeClockSkewDetected"}
+{"truth": "same", "kind": "reworded, no name", "saved": "how do I fix KubePersistentVolumeFillingUp?", "asked": "my persistent volume is filling up, how do I fix it?"}
+{"truth": "same", "kind": "reworded, name kept", "saved": "how do I fix KubePersistentVolumeFillingUp?", "asked": "fix for KubePersistentVolumeFillingUp"}
+{"truth": "same", "kind": "reworded, no name", "saved": "what does KubeDeploymentReplicasMismatch mean?", "asked": "what does it mean when a deployment has fewer replicas than expected?"}
+{"truth": "different", "kind": "other alert, named", "saved": "what does the etcdNoLeader alert mean?", "asked": "what does the etcdMembersDown alert mean?"}
+{"truth": "different", "kind": "other alert, named", "saved": "how do I fix KubePodCrashLooping?", "asked": "how do I fix KubePodNotReady?"}
+{"truth": "different", "kind": "other alert, named", "saved": "what is the impact of KubeHpaMaxedOut?", "asked": "what is the impact of KubeHpaReplicasMismatch?"}
+{"truth": "different", "kind": "other alert, named", "saved": "how do I diagnose NodeFilesystemAlmostOutOfSpace?", "asked": "how do I diagnose NodeFilesystemAlmostOutOfFiles?"}
+{"truth": "different", "kind": "other alert, named", "saved": "how do I fix PrometheusBadConfig?", "asked": "how do I fix PrometheusRuleFailures?"}
+{"truth": "different", "kind": "other alert, named", "saved": "what does NodeClockSkewDetected mean?", "asked": "what does NodeClockNotSynchronising mean?"}
+{"truth": "different", "kind": "other alert, named", "saved": "what does KubeJobFailed mean?", "asked": "what does KubeJobCompletion mean?"}
+{"truth": "different", "kind": "other alert, named", "saved": "how do I fix KubeNodeNotReady?", "asked": "how do I fix KubeNodeUnreachable?"}
+{"truth": "different", "kind": "other alert, named", "saved": "what does KubeDeploymentReplicasMismatch mean?", "asked": "what does KubeStatefulSetReplicasMismatch mean?"}
+{"truth": "different", "kind": "other alert, named", "saved": "what is the impact of KubeAPIDown?", "asked": "what is the impact of KubeSchedulerDown?"}
+{"truth": "different", "kind": "other alert, name not recognisable", "saved": "what does the etcdNoLeader alert mean?", "asked": "what does the etcdmembersdown alert mean?"}
+{"truth": "different", "kind": "other alert, name not recognisable", "saved": "what does the etcdNoLeader alert mean?", "asked": "what does the etcd members down alert mean?"}
+{"truth": "different", "kind": "other alert, name not recognisable", "saved": "how do I fix KubePodCrashLooping?", "asked": "how do I fix kubepodnotready?"}
+{"truth": "different", "kind": "other alert, name not recognisable", "saved": "how do I fix KubeNodeNotReady?", "asked": "how do I fix a node that is unreachable?"}
+{"truth": "different", "kind": "other alert, name not recognisable", "saved": "how do I diagnose NodeFilesystemAlmostOutOfSpace?", "asked": "how do I diagnose a node running out of inodes?"}
+{"truth": "different", "kind": "other alert, name not recognisable", "saved": "what does KubeJobFailed mean?", "asked": "what does it mean when a job takes too long to complete?"}
+{"truth": "different", "kind": "same alert, other question", "saved": "what does the etcdNoLeader alert mean?", "asked": "how do I fix etcdNoLeader?"}
+{"truth": "different", "kind": "same alert, other question", "saved": "how do I fix KubePodCrashLooping?", "asked": "what does KubePodCrashLooping mean?"}
+{"truth": "different", "kind": "same alert, other question", "saved": "what is the impact of KubeHpaMaxedOut?", "asked": "how do I fix KubeHpaMaxedOut?"}
+{"truth": "different", "kind": "same alert, other question", "saved": "how do I diagnose NodeFilesystemAlmostOutOfSpace?", "asked": "how do I fix NodeFilesystemAlmostOutOfSpace?"}
+{"truth": "different", "kind": "same alert, other question", "saved": "how do I fix PrometheusBadConfig?", "asked": "what is the impact of PrometheusBadConfig?"}
+{"truth": "different", "kind": "same alert, other question", "saved": "what does CPUThrottlingHigh mean?", "asked": "how do I stop CPUThrottlingHigh?"}
+{"truth": "different", "kind": "same alert, other question", "saved": "how do I fix KubeNodeNotReady?", "asked": "what causes KubeNodeNotReady?"}
+{"truth": "different", "kind": "same alert, other question", "saved": "what is the impact of KubeAPIDown?", "asked": "how do I diagnose KubeAPIDown?"}
+{"truth": "different", "kind": "unrelated", "saved": "what does the etcdNoLeader alert mean?", "asked": "how do I rotate my AWS access keys?"}
+{"truth": "different", "kind": "unrelated", "saved": "how do I fix KubePodCrashLooping?", "asked": "how do I upgrade terraform providers?"}
+{"truth": "different", "kind": "unrelated", "saved": "what does the Watchdog alert do?", "asked": "what is the weather today?"}
+{"truth": "different", "kind": "unrelated", "saved": "what does CPUThrottlingHigh mean?", "asked": "how do I write a helm chart?"}
+{"truth": "different", "kind": "unrelated", "saved": "how do I diagnose TargetDown?", "asked": "how do I reset my jenkins password?"}
+{"truth": "different", "kind": "unrelated", "saved": "what does KubeJobFailed mean?", "asked": "what is a kubernetes service?"}
