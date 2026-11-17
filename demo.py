@@ -24,6 +24,6 @@ while True:
         score, saved, _ = cache.closest(question)
         print(f"     closest saved question: {saved!r}  score {score:.3f}  (hit needs {cache.threshold})")
     start = time.perf_counter()
-    answer, hit = ask(question, cache, llm)
+    answer, hit = ask(question, cache, lambda q: (llm.invoke(q).content, []))
     seconds = time.perf_counter() - start
     print(f"{'HIT ' if hit else 'MISS'} {seconds:6.3f}s  {answer[:150]}")

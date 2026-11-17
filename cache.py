@@ -1,7 +1,9 @@
-"""A notebook of questions already answered, checked before asking the model."""
+"""A notebook of questions already answered, checked before running the pipeline."""
+import hashlib
 import re
 import time
 from functools import cache
+from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
 
@@ -27,6 +29,12 @@ def about_different_alerts(question, saved_question):
     return bool(asked and saved and asked != saved)
 
 
+def checksum(path):
+    """A short code for a file's content: it changes when the file changes. None if the file is gone."""
+    path = Path(path)
+    return hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else None
+
+
 class ExactCache:
     """Remembers answers by the exact text of the question."""
 
@@ -36,7 +44,9 @@ class ExactCache:
     def get(self, question):
         return self.answers.get(question)
 
-    def put(self, question, answer):
+    # shortcut: sources are accepted and ignored, so a changed runbook is not noticed here.
+    # Use SemanticCache when answers are built from files that can change.
+    def put(self, question, answer, sources=()):
         self.answers[question] = answer
 
 
@@ -50,21 +60,25 @@ class SemanticCache:
         self.check_names = check_names  # switched off only to measure what the check is worth
         self.max_age = max_age  # seconds an answer stays usable; None means it never expires
         self.clock = clock  # tests pass a fake clock so they do not have to wait
-        self.entries = []  # one (fingerprint, question, answer, saved_at) per saved question
+        self.entries = []
+
+    def still_good(self, entry):
+        if self.max_age is not None and entry["saved_at"] < self.clock() - self.max_age:
+            return False
+        return all(checksum(path) == saved for path, saved in entry["sources"].items())
 
     def closest(self, question):
         """Return (score, saved_question, saved_answer) for the most similar saved question.
 
+        Expired answers and answers whose runbooks changed are thrown away first.
         Saved questions that name a different alert are left out.
         """
-        if self.max_age is not None:
-            oldest_allowed = self.clock() - self.max_age
-            self.entries = [entry for entry in self.entries if entry[3] >= oldest_allowed]
+        self.entries = [entry for entry in self.entries if self.still_good(entry)]
         asked = fingerprint(question)
         scored = [
-            (float(saved @ asked), q, a)
-            for saved, q, a, _ in self.entries
-            if not (self.check_names and about_different_alerts(question, q))
+            (float(entry["fingerprint"] @ asked), entry["question"], entry["answer"])
+            for entry in self.entries
+            if not (self.check_names and about_different_alerts(question, entry["question"]))
         ]
         return max(scored, default=(0.0, None, None))
 
@@ -72,15 +86,24 @@ class SemanticCache:
         score, _, answer = self.closest(question)
         return answer if score >= self.threshold else None
 
-    def put(self, question, answer):
-        self.entries.append((fingerprint(question), question, answer, self.clock()))
+    def put(self, question, answer, sources=()):
+        self.entries.append({
+            "fingerprint": fingerprint(question),
+            "question": question,
+            "answer": answer,
+            "saved_at": self.clock(),
+            "sources": {str(path): checksum(path) for path in sources},
+        })
 
 
-def ask(question, cache, llm):
-    """Return (answer, came_from_cache)."""
+def ask(question, cache, answer_fn):
+    """answer_fn(question) runs the real pipeline and returns (answer, files_it_used).
+
+    Return (answer, came_from_cache).
+    """
     answer = cache.get(question)
     if answer is not None:
         return answer, True
-    answer = llm.invoke(question).content
-    cache.put(question, answer)
+    answer, sources = answer_fn(question)
+    cache.put(question, answer, sources)
     return answer, False

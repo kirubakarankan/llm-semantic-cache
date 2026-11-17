@@ -1,25 +1,29 @@
-from langchain_core.language_models.fake_chat_models import FakeListChatModel
-
 from cache import ExactCache, SemanticCache, ask, names
 
 
-def test_first_time_a_question_is_asked_the_model_answers_it():
-    llm = FakeListChatModel(responses=["answer one"])
-    assert ask("what is etcdNoLeader?", ExactCache(), llm) == ("answer one", False)
+def answers_in_turn(*texts, sources=()):
+    """A stand-in for the real pipeline: gives the next text each time it is asked."""
+    remaining = iter(texts)
+    return lambda question: (next(remaining), list(sources))
 
 
-def test_same_question_again_comes_from_the_cache_without_asking_the_model():
-    llm = FakeListChatModel(responses=["answer one", "answer two"])
+def test_first_time_a_question_is_asked_the_pipeline_answers_it():
+    answer_fn = answers_in_turn("answer one")
+    assert ask("what is etcdNoLeader?", ExactCache(), answer_fn) == ("answer one", False)
+
+
+def test_same_question_again_comes_from_the_cache_without_running_the_pipeline():
+    answer_fn = answers_in_turn("answer one", "answer two")
     cache = ExactCache()
-    ask("what is etcdNoLeader?", cache, llm)
-    assert ask("what is etcdNoLeader?", cache, llm) == ("answer one", True)
+    ask("what is etcdNoLeader?", cache, answer_fn)
+    assert ask("what is etcdNoLeader?", cache, answer_fn) == ("answer one", True)
 
 
 def test_reworded_question_is_a_miss_for_an_exact_cache():
-    llm = FakeListChatModel(responses=["answer one", "answer two"])
+    answer_fn = answers_in_turn("answer one", "answer two")
     cache = ExactCache()
-    ask("what is etcdNoLeader?", cache, llm)
-    assert ask("explain etcdNoLeader", cache, llm) == ("answer two", False)
+    ask("what is etcdNoLeader?", cache, answer_fn)
+    assert ask("explain etcdNoLeader", cache, answer_fn) == ("answer two", False)
 
 
 SAVED = "what does the etcdNoLeader alert mean?"
@@ -97,3 +101,39 @@ def test_expired_answers_are_removed_from_the_notebook():
     now[0] += 11
     cache.get(SAVED)
     assert cache.entries == []
+
+
+def test_answer_is_reused_while_its_runbook_is_unchanged(tmp_path):
+    runbook = tmp_path / "etcdNoLeader.md"
+    runbook.write_text("Restart the etcd pods.")
+    cache = SemanticCache()
+    cache.put(SAVED, "restart the pods", sources=[runbook])
+    assert cache.get(SAVED) == "restart the pods"
+
+
+def test_answer_is_dropped_when_its_runbook_is_edited(tmp_path):
+    runbook = tmp_path / "etcdNoLeader.md"
+    runbook.write_text("Restart the etcd pods.")
+    cache = SemanticCache()
+    cache.put(SAVED, "restart the pods", sources=[runbook])
+    runbook.write_text("Restore from the latest snapshot.")
+    assert cache.get(SAVED) is None
+
+
+def test_answer_is_dropped_when_its_runbook_is_deleted(tmp_path):
+    runbook = tmp_path / "etcdNoLeader.md"
+    runbook.write_text("Restart the etcd pods.")
+    cache = SemanticCache()
+    cache.put(SAVED, "restart the pods", sources=[runbook])
+    runbook.unlink()
+    assert cache.get(SAVED) is None
+
+
+def test_ask_gives_a_fresh_answer_after_the_runbook_changes(tmp_path):
+    runbook = tmp_path / "etcdNoLeader.md"
+    runbook.write_text("Restart the etcd pods.")
+    answer_fn = answers_in_turn("restart the pods", "restore the snapshot", sources=[runbook])
+    cache = SemanticCache()
+    ask(SAVED, cache, answer_fn)
+    runbook.write_text("Restore from the latest snapshot.")
+    assert ask(SAVED, cache, answer_fn) == ("restore the snapshot", False)
